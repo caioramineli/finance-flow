@@ -2,12 +2,15 @@
     <div>
         <v-app-bar app color="blue darken-3" dark>
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>FinanceFlow</v-toolbar-title>
+            <v-toolbar-title>MyContacts</v-toolbar-title>
 
             <v-spacer></v-spacer>
-            <h4 class="h-4 ma-2">
-                {{ userName }}
-            </h4>
+            <v-row class="d-flex justify-end align-center">
+                <ChangeTheme />
+                <h4 class="h-4 ma-2">
+                    Olá, {{ userName }}
+                </h4>
+            </v-row>
         </v-app-bar>
 
         <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -40,10 +43,15 @@
 </template>
 
 <script>
+import ChangeTheme from './ChangeTheme.vue';
+
 export default {
+    components: {
+        ChangeTheme
+    },
     computed: {
         userName() {
-            return this.$store.getters.getUserName || 'Usuário';
+            return this.$store.getters.getUserName.split(' ')[0] || 'Visitante';
         },
     },
     data: () => ({

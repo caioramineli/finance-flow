@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     data: () => ({
         formData: {
@@ -51,9 +49,9 @@ export default {
             this.loading = true;
 
             try {
-                await axios.post('http://localhost:5000/user-register', this.formData);
+                await this.$http.post('user-register', this.formData);
 
-                const responseLogin = await axios.post('http://localhost:5000/auth', {
+                const responseLogin = await this.$http.post('auth', {
                     email: this.formData.email,
                     password: this.formData.password
                 });

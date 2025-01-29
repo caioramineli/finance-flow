@@ -8,27 +8,25 @@ import RegisterPage from '@/views/RegisterPage.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     routes: [
         {
             path: '/',
-            name: 'Home',
             component: HomePage,
+            meta: { requiresAuth: true },
         },
         {
             path: '/account',
-            name: 'Account',
             component: AccountPage,
+            meta: { requiresAuth: true },
         },
         {
             path: '/login',
-            name: 'Login',
             component: LoginPage,
         },
         {
             path: '/register',
-            name: 'Register',
             component: RegisterPage,
         },
         {
@@ -37,3 +35,17 @@ export default new Router({
         },
     ],
 });
+
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = !!localStorage.getItem('token');
+
+    if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+        next('/login');
+    } else {
+        next();
+    }
+});
+
+
+export default router

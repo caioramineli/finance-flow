@@ -10,8 +10,7 @@
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" :type="showPassword ? 'text' : 'password'"
                     label="Senha" required @click:append="showPassword = !showPassword" />
 
-                <v-btn type="submit" width="100%" large :loading="loading" :disabled="loading" color="primary"
-                    @click="loader = 'loading'">
+                <v-btn type="submit" block large :loading="loading" :disabled="loading" color="primary">
                     Fazer Login
                 </v-btn>
 
@@ -26,8 +25,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     data: () => ({
         formData: {
@@ -43,7 +40,7 @@ export default {
             this.loading = true;
 
             try {
-                const response = await axios.post('http://localhost:5000/auth', this.formData);
+                const response = await this.$http.post('/auth', this.formData);
                 const { token } = response.data;
                 this.$store.dispatch('setUserFromToken', token)
                 this.$router.push('/');

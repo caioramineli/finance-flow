@@ -1,16 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
         user: null,
+        contacts: [],
+        loadingContacts: false,
     },
     getters: {
-        isLoggedIn: (state) => !!state.user,
         getUserName: (state) => state.user?.name || '',
+        getUserId: (state) => state.user?.id,
+        getContacts: (state) => state.contacts,
     },
     mutations: {
         setUser(state, user) {
@@ -19,6 +23,15 @@ export default new Vuex.Store({
         clearUser(state) {
             state.user = null;
         },
+        setContacts(state, contacts) {
+            state.contacts = contacts;
+        },
+        addContact(state, contact) {
+            state.contacts.push(contact);
+        },
+        setLoadingContacts(state, loadingContacts) {
+            state.loadingContacts = loadingContacts
+        }
     },
     actions: {
         setUserFromToken({ commit }, token) {
@@ -45,6 +58,28 @@ export default new Vuex.Store({
         logoutUser({ commit }) {
             commit('clearUser');
             localStorage.removeItem('token');
+        },
+        updateContacts({ commit }, contacts) {
+            commit('setContacts', contacts);
+        },
+        addNewContact({ commit }, contact) {
+            commit('addContact', contact);
+        },
+        async fetchContactsData({ commit }) {
+            commit('setLoadingContacts', true);
+            try {
+                const token = localStorage.getItem('token');
+
+                const response = await axios.get('https://backend-tech-insights-production.up.railway.app/get-contacts-by-user', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                commit('setContacts', response.data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                commit('setLoadingContacts', false);
+            }
         },
     }
 });

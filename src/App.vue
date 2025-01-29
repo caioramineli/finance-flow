@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <HeaderApp />
-
     <v-main>
       <transition name="fade" mode="out-in">
         <router-view />
@@ -18,11 +17,7 @@ export default {
 
   components: {
     HeaderApp,
-  },
-
-  data: () => ({
-    //
-  }),
+  }
 };
 </script>
 
@@ -31,11 +26,13 @@ export default {
   text-decoration: none !important;
 }
 
-/* Exemplo de transição de fade */
-.fade-enter-active, .fade-leave-active {
-    transition: opacity 0.2s ease-in-out;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-in-out;
 }
-.fade-enter-from, .fade-leave-to {
-    opacity: 0;
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
