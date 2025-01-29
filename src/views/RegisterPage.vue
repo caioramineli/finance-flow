@@ -57,7 +57,7 @@ export default {
                 });
 
                 const { token } = responseLogin.data;
-                localStorage.setItem('token', token);
+                this.$store.dispatch('setUserFromToken', token)
 
                 this.$router.push('/');
             } catch (err) {

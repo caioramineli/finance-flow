@@ -20,22 +20,16 @@
                         <v-list-item-icon>
                             <v-icon>mdi-home</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title>Home</v-list-item-title>
+                        <v-list-item-title>Tela Inicial</v-list-item-title>
                     </v-list-item>
 
                     <v-list-item to="/account" class="v-list-item">
                         <v-list-item-icon>
                             <v-icon>mdi-account</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title>Account</v-list-item-title>
+                        <v-list-item-title>Minha Conta</v-list-item-title>
                     </v-list-item>
-
-                    <v-list-item v-if="$store.getters.getUserName !== ''" class="v-list-item" @click="logout">
-                        <v-list-item-icon>
-                            <v-icon>mdi-export</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Sair</v-list-item-title>
-                    </v-list-item>
+                    <LogOut :dialogProp.sync="dialog" />
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
@@ -44,10 +38,12 @@
 
 <script>
 import ChangeTheme from './ChangeTheme.vue';
+import LogOut from './LogOut.vue';
 
 export default {
     components: {
-        ChangeTheme
+        ChangeTheme,
+        LogOut,
     },
     computed: {
         userName() {
@@ -57,12 +53,7 @@ export default {
     data: () => ({
         drawer: false,
         group: null,
+        dialog: false
     }),
-    methods: {
-        logout() {
-            this.$store.dispatch('logoutUser')
-            this.$router.push('/login');
-        }
-    }
 };
 </script>
