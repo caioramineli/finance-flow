@@ -29,7 +29,9 @@
                         </v-list-item-icon>
                         <v-list-item-title>Minha Conta</v-list-item-title>
                     </v-list-item>
-                    <LogOut :dialogProp.sync="dialog" />
+                    <template v-if="$store.getters.getUserName !== ''">
+                        <LogOut :dialogProp.sync="dialog" />
+                    </template>
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
