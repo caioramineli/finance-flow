@@ -70,7 +70,7 @@ export default new Vuex.Store({
             try {
                 const token = localStorage.getItem('token');
 
-                const response = await axios.get('https://backend-tech-insights-production.up.railway.app/get-contacts-by-user', {
+                const response = await axios.get('https://backend-tech-insights.vercel.app/get-contacts-by-user', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
